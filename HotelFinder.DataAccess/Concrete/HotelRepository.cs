@@ -26,12 +26,7 @@ namespace HotelFinder.DataAccess.Concrete
             {
                 var deletedHotel = GetHotelById(id);
 
-                if (deletedHotel == null)
-                {
-
-                    throw new Exception("Hotel not found");
-                }
-
+                
                 hotelDbContext.Hotels.Remove(deletedHotel);
                 hotelDbContext.SaveChanges();
 
@@ -54,15 +49,10 @@ namespace HotelFinder.DataAccess.Concrete
         {
             using (var hotelDbContext = new HotelDbContext())
             {
-                var hotel = hotelDbContext.Hotels.Find(id);
+                return hotelDbContext.Hotels.Find(id);
 
-                if (hotel == null)
-                {
-                    
-                    throw new Exception("Hotel not found");
-                }
-
-                return hotel;
+               
+                 
             }
         }
 
