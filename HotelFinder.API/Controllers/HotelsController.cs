@@ -33,12 +33,26 @@ namespace HotelFinder.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet]
+        [Route("[action]/{id}")] //api/hotels/gethotelbyid/2
+        public IActionResult GetHotelById(int id)
         {
             var hotel = _hotelService.GetHotelById(id);
 
             if (hotel!= null)
+            {
+                return Ok(hotel); //200 + data
+            }
+            return NotFound(); //404
+        }
+
+        [HttpGet]
+        [Route("[action]/{Name}")]
+        public IActionResult GetHotelByName(string name)
+        {
+            var hotel = _hotelService.GetHotelByName(name);
+
+            if (hotel !=null)
             {
                 return Ok(hotel); //200 + data
             }
@@ -51,7 +65,8 @@ namespace HotelFinder.API.Controllers
         /// <param name="hotel"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post([FromBody] Hotel hotel)
+        [Route("[action]")]
+        public IActionResult CreateHotel([FromBody] Hotel hotel)
         {
             // if (ModelState.IsValid) "[ApiController]" validation işlemlerini kendi otamatik kontrol ediyor
             //{                                        data geçerli değilse bu actiona girmiyor bile
@@ -67,7 +82,8 @@ namespace HotelFinder.API.Controllers
         /// <param name="hotel"></param>
         /// <returns></returns>
         [HttpPut]
-        public IActionResult Put([FromBody] Hotel hotel)
+        [Route("[action]")]
+        public IActionResult UpdateHotel([FromBody] Hotel hotel)
         {
             if (_hotelService.GetHotelById(hotel.Id)!=null)
             {
@@ -82,8 +98,9 @@ namespace HotelFinder.API.Controllers
         /// Delete The Hotel
         /// </summary>
         /// <param name="id"></param>
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete]
+        [Route("[action]/{id}")]
+        public IActionResult DeleteHotel(int id)
         {
             if (_hotelService.GetHotelById(id) != null)
             {

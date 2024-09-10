@@ -13,6 +13,8 @@ namespace HotelFinder.Business.Abstract
 
         Hotel GetHotelById(int id);
 
+        Hotel GetHotelByName(string name);
+
 
         Hotel CreateHotel(Hotel hotel);
 
